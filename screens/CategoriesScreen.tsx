@@ -19,9 +19,16 @@ const CategoriesScreen = () => {
     return {
         ...item,
         color: COLORS[Math.floor(Math.random() * COLORS.length)]
-
     }
   })
+
+  if (newData && newData.length % 2 !== 0){
+    newData.push({
+        id: newData[newData.length - 1].id + 1,
+        name: '',
+        color: 'transparent'
+    })
+  }
  
 
   return (
