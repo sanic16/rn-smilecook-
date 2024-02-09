@@ -7,10 +7,16 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
             query: () => ({
                 url: CATEGORIES_URL
             })
+        }),
+        getCategoryWithMeals: builder.query<CategoryWithMeals, number>({
+            query: (id) => ({
+                url: `${CATEGORIES_URL}/${id}`
+            })
         })
     })
 })
 
 export const { 
-    useGetCategoriesQuery
+    useGetCategoriesQuery,
+    useGetCategoryWithMealsQuery
 } = categoriesApiSlice

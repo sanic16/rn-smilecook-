@@ -1,18 +1,17 @@
-import { Text, View, FlatList } from "react-native"
+import { FlatList } from "react-native"
 import { useGetCategoriesQuery } from "../store/slices/categorySlice"
 import CategoryGridTitle from "../components/CategoryGridTitle"
 import { COLORS } from "../utils/constants"
 
-const renderCategoryItem = (item: Category, color: string) => {
-    return (
-        <CategoryGridTitle
-            title={item.name}
-            color={color}
-        />
-    )
-}
 
-const CategoriesScreen = () => {
+
+const CategoriesScreen = (
+    {
+        navigation
+    }: {
+        navigation: any
+    }
+) => {
   const { data, error, isLoading } = useGetCategoriesQuery()
 
   const newData = data?.map(item => {
@@ -21,6 +20,22 @@ const CategoriesScreen = () => {
         color: COLORS[Math.floor(Math.random() * COLORS.length)]
     }
   })
+
+  const renderCategoryItem = (item: Category, color: string) => {
+    const pressHandler = () => {
+        navigation.navigate('MealsOverview', {
+            categoryId: item.id,
+            title: item.name
+        })
+    }
+    return (
+        <CategoryGridTitle
+            title={item.name}
+            color={color}
+            onPress={pressHandler}
+        />
+    )
+}
 
   if (newData && newData.length % 2 !== 0){
     newData.push({
